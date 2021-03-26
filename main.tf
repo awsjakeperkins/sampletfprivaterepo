@@ -1,24 +1,14 @@
-resource "aws_security_group" "allow_tls" {
-  name        = "allow_tls"
-  description = "Allow TLS inbound traffic"
-  vpc_id      = var.vpc_id
-
-  ingress {
-    description = "TLS from VPC"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = [ var.cidr ]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+resource "aws_s3_bucket" "b" {
+  bucket = var.module_bucket_name
+  acl    = "private"
 
   tags = {
-    Name = "allow_tls"
+    Name        = "My bucket"
+    Environment = "Dev"
   }
+}
+
+variable "module_bucket_name" {
+  type        = string
+  description = "Name of Nested Module"
 }
